@@ -9,21 +9,26 @@ struct Book{
 };
 
 void main(void){
-	struct Book *p;
+	int i;
+	struct Book **bookshelf;
 	
-	p = (struct Book*)malloc(2 *sizeof(struct Book));
+	bookshelf = (struct Book**)malloc(sizeof(struct Book*)); //3개의 구조체 포인터 변수 할 당  
+	for(i=0;i<3;i++)
+	bookshelf[i] = (struct Book*)malloc(sizeof(struct Book*)); //10개의 구조체 변수 할당  
 	
-	if(p==NULL){
-		printf("메모리 할당 오류\n");
-		return;
-	}
+	bookshelf[1][3].number =5;
+	strcpy(bookshelf[1][3].title, "C Programming");
 	
-	p->number = 1;
-	strcpy(p->title, "C Programming");
+	(bookshelf[2]+4) -> number = 3;
+	strcpy((bookshelf[2]+4)->title, "Communications Theory");
 	
-	(p+1)->number = 1;
-	strcpy((p+1)->title, "Electronics");
+	printf("book(1,3) : %i, %s\n", (bookshelf[1]+3)->number, (bookshelf[1]+3)->title);
+	printf("book(2,4) : %i, %s\n", bookshelf[2][4].number, bookshelf[2][4].title);
 	
-	free(p);
+	for(i=0; i<3; i++)
+	free(bookshelf[i]);
+	
+	free(bookshelf); 
+
 	return;
 }
